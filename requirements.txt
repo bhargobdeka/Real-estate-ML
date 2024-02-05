@@ -1,0 +1,11 @@
+numpy
+pandas
+matplotlib
+scikit-learn
+seaborn
+ipykernel
+llama-index
+openai
+python-dotenv
+langchain
+folium
