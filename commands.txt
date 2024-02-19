@@ -1,0 +1,10 @@
+
+# Command to build the docker image
+docker build -t mlepc4w2-ugl:no-batch .
+
+# Run the docker image
+docker run --rm -p 80:80 mlepc4w2-ugl:no-batch
+
+
+
+
