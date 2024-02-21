@@ -1,19 +1,17 @@
 import pickle
 import numpy as np
 from fastapi import FastAPI
-from contextlib import asynccontextmanager
+# from contextlib import asynccontextmanager
 from pydantic import BaseModel
-import uvicorn
+# import uvicorn
 
 # Create a fastAPI instance
-app = FastAPI(title="Real Estate Price Prediction", \
-    description="API to predict the permit approval time of a house", version="1.0")
+app = FastAPI(title="Permit Approval Time Prediction", \
+    description="API to predict the permit approval time in days", version="1.0")
 
-# Load the model
-pathname = "/Users/bhargobdeka/Desktop/Projects/Real-estate-ML/app/trained_model.pkl"
-
+# Load the trained model
 def load_model():
-    with open(pathname, "rb") as f:
+    with open("/app/trained_model.pkl", "rb") as f:
         global model
         model = pickle.load(f)
     
@@ -34,7 +32,7 @@ class RealEstate(BaseModel):
 
 @app.get("/")
 async def read_root():
-    return {"message": "Welcome to the Real Estate Price Prediction API"}
+    return {"message": "Welcome to the Permit Approval Time Prediction API"}
     
 @app.post("/predict")
 
@@ -49,7 +47,7 @@ def predict(realestate:RealEstate):
     load_model()
     # Make a prediction
     prediction = model.predict(data).tolist()
-    return {"prediction": np.exp(prediction[0])}   
+    return {"prediction": np.round(np.exp(prediction[0]))}   
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="localhost", port=8080)
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="localhost", port=8080)
